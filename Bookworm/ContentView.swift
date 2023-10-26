@@ -36,9 +36,14 @@ struct ContentView: View {
                         }
                     }
                 }
+                .onDelete(perform: deleteBook)
             }
             .navigationTitle("Bookworm")
             .toolbar{
+                ToolbarItem(placement: .topBarLeading) {
+                    EditButton()
+                }
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showingAddScreen.toggle()
@@ -50,6 +55,15 @@ struct ContentView: View {
             .sheet(isPresented: $showingAddScreen) {
                 AddBookView()
             }
+        }
+    }
+    
+    func deleteBook(at offsets: IndexSet) {
+        for offset in offsets {
+            let book = books[offset]
+            moc.delete(book)
+            
+            //try? moc.save()
         }
     }
 }
