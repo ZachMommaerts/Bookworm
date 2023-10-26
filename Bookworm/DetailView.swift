@@ -32,7 +32,7 @@ struct DetailView: View {
             }
             
             Text(book.author ?? "Unknown Author")
-                .font(.title)
+                .font(.headline)
                 .foregroundStyle(.secondary)
             
             Text(book.review ?? "No review")
@@ -40,6 +40,10 @@ struct DetailView: View {
             
             RatingView(rating: .constant(Int(book.rating)))
                 .font(.largeTitle)
+            
+            Text(dateToString(date: book.date))
+                .font(.subheadline)
+                .padding(.top)
         }
         .navigationTitle(book.title ?? "Unknown Book")
         .navigationBarTitleDisplayMode(.inline)
@@ -63,6 +67,13 @@ struct DetailView: View {
         
         // try? moc.save()
         dismiss()
+    }
+    
+    func dateToString(date: Date?) -> String {
+        let unwrappedDate = date ?? Date.now
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/YY"
+        return dateFormatter.string(from: unwrappedDate)
     }
 }
 
